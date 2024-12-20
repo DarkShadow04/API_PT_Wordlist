@@ -1,0 +1,323 @@
+GET:
+Information Gathering:
+Finger Printing:
+For this test case we will change the request method to HEAD and send request to server And observe the server response.
+We did not find any server version related information in response. It's not an issue.
+Analysis of Error Messages:
+We have checked all error messages which occurred while testing. Not a Finding.
+
+
+Security Misconfiguration:
+XST(http verbs):
+We intercept the request into burp and sent it to the intruder and added payloads. After the intruder attack we got 200 OK for only GET and OPTIONS method.
+For remaining we got error responces.
+
+
+No response found for CONNECT method No risk identified.
+
+
+CORS:
+For performing this test case first, we will check the
+
+Access Control Allow {cars) headers are implemented or not.
+
+For this we will add CORS headers into request and send to server and observe the response
+
+lfwe found CORS headers in response, then we willtryto change the Origin of application and send request to server.
+Access-Control-Request-Method:  POST
+
+Access-Control-Request-Headers: access-control-allow-headers, access-control-allow-methods, access­ control-allow-origin, content-type
+
+Origin: http://localhost
+Not a Finding
+
+
+Information Exposure - Query String in URL:
+We manually check API requests.
+
+No information is exposed in the URL. Not a Finding
+
+
+Authentication Testing:
+Lack of Authentication:
+First, we intercept the API request into burp, then we remove the JWT access token and send request to server and observe the server response.
+Getting 401 Unauthorised as response. Not a Finding
+
+
+Authorization Bypass:
+Authorization Bypass:
+For performing this test case
+
+We login as a High privileged user And invoked the API.
+
+
+Then we exchange the JWT token with low privileged user And try to invoke the API.
+
+Response is 403 Forbidden. Not a finding.
+
+Testing for Insecure Direct Object References:Broken object level Authorization:
+For performing this test case we will require the body/query parameters in API. Not Applicable, since there is no parameter passing through the request.
+
+
+Excessive data exposure:
+For performing this test case we modified the API path and send request to server
+
+?page=https://evil.com
+
+
+No data exposed. No risk identified.
+
+
+Broken Function level Authorization:
+We will change the request method of GET to DELETE and observe the server response. Getting 405 method not allowed.
+Not a finding
+
+Mass Assignment:
+Append the request with a response parameter and check if we can forge the response if sent in request:
+Find any parameter in the response. And now try to append in the request. And then modify the parameter and check if the response of the parameter is changed or not.
+even if we change the parameter value it's not changed in the response. It is not a finding.
+
+
+Testing for Path Traversal:
+For performing this test case
+
+We intercepted the API request into burp and sent it to the intruder & then selected the payload position.
+Add And observe the server response the payloads & clicked on start attack. We got 400, 404 responses from the server.
+And we got 200 responses from some payloads. It's a finding.
+
+Input Validation:
+SQLMAPPING:
+sqlmap.py -r filename.txt --batch --dbs
+
+As there are no input parameters present to validate this test case hence not applicable
+
+SQLi:
+Using intruder: Intruder attack­ Load the payloads. Start the attack.
+400 error:
+
+No risk identified.
+
+
+
+
+Cross Site Scripting:
+Using intruder: Intruder attack­ Load the payloads. Start the attack.
+400 error:
+
+No risk identified.
+
+
+
+
+Command Injection:
+Using intruder: Intruder attack­ Load the payloads. Start the attack.
+400 error:
+
+No risk identified.
+
+
+
+X-Path Injection:& XML External Entity:&
+XML Denial of Service:
+Install content type converter in Extensions in burpsuit
+
+Send the request to repeater-rightclick-extensions-content type converter-convert to XML. Send the request to view the response.
+No risk identified.
+
+
+File Extension Handling:
+File Size:
+This API is not used for file upload functionality.
+
+
+SSRF:
+We have performed this test case using Burp collaborator.
+
+Got to the burp collaborator and click copy to clip board then remove Host value and add copied value.
+Send request to server the go to the burp click on poll now. If we got response in burp collaborator its finding.
+So no response in collaborator and its not a finding.
+
+
+DOS:
+Buffer Overflow:
+Try to add the ( %x%x%x%x%x%x%x%n) payload in input parameters or URL but we did not observe any lagging in response.
+No risk identified.
+
+Unrestricted Field Length:
+Not Applicable, since there is no parameter passing through the request.
+
+Not a finding
+
+
+@FND-Lack of Resource & Rate Limiting:
+Send the request to intruder and no payload positions added. Pay load type: null
+Generate 1000 payloads.
+
+Add custom resourse pool to 300. Getting 200 OK response.
+risk identified.
+
+
+
+
+
+POST:
+Information Gathering:
+Finger Printing:
+Capture the POST request.
+
+Here changed the method from POST to HEAD.
+
+No information of the server is being displayed from X-Powered by or server header. Response is not giving the Server header and its version. Therefore, not a finding.
+
+
+Analysis of Error Messages:
+Error is not disclosing any sensitive information in the response. Therefore, not a finding.
+
+
+Security Misconfiguration:
+XST(http verbs):
+We intercept the request into burp and sent it to the intruder and added payloads positions. Start the attack and analyze the results:
+
+Response-400:
+
+No risk identified.
+
+
+
+
+CORS:
+Check if CORS headers are there in the response:
+
+CORS headers are not identified in the response. Adding,
+Access-Control-Request-Method: POST
+
+Access-Control-Request-Headers: access-control-allow-headers, access-control-allow-methods, access­ control-allow-origin, content-type
+Origin: http://localhost
+Options:
+Response host not changed. No altered response observed. No risk identified.
+
+
+Information Exposure - Query String in URL:
+Navigate through the APls and check if any sensitive information is passed in URL parameters: Not a Finding
+
+Authentication Testing:
+Lack of Authentication:
+First, we intercept the API request into burp, then we remove the JWT access token and send request to server and observe the server response.
+Modifying authorization header:
+
+
+Getting 401 Unauthorised as response. Not a Finding
+
+
+Authorization Bypass:
+Authorization Bypass:
+For performing this test case
+
+We login as a High privileged user And invoked the API.
+
+Then we exchange the admin bearer token with low privileged user And try to invoke the API.
+
+
+Response is 403 Forbidden. Not a finding.
+
+
+Testing for Insecure Direct Object References:Broken object level Authorization:
+Changing the response id.
+
+We can observe that the response does not contain any sensitive information. No risk.
+
+
+Excessive data exposure:
+For performing this test case we modified the API path and send request to server
+
+?page= https:/ /evil.com
+
+No data exposed. No risk identified.
+
+
+Broken Function level Authorization:
+We will change the request method of POST to DELETE and observe the server response. Getting 405 method not allowed.
+Not a finding
+
+
+Mass Assignment:
+Append the request with a response parameter and check if we can forge the response if sent in request:
+Find any parameter in the response. And now try to append in the request. And then modify the parameter and check if the response of the parameter is changed or not.
+even if we change the parameter value it's not changed in the response. It is not a finding.
+
+Testing for Path Traversal:
+For performing this test case
+
+We intercepted the API request into burp and sent it to the intruder & then added the payload position.
+Add And observe the server response ed the payloads & clicked on start attack. We got 400, 404 responses from the server.
+And we got 200 responses from some payloads. It's a finding.
+
+
+Input Validation:
+SQLMAPPING:
+SQLi:
+Using intruder: Intruder attack­ Load the payloads. Start the attack.
+400 error:
+
+No risk identified.
+
+
+
+Cross Site Scripting:
+Using intruder: Intruder attack­ Load the payloads. Start the attack.
+400 error:
+
+No risk identified.
+
+Command Injection:
+Send the request to Intruder.
+
+add positions & command payloads:
+
+Start the attack and analyze the response:
+
+Response:400
+not a finding.
+
+
+
+X-Path Injection:& XML External Entity:&
+XML Signature Wrapping:&
+XML Denial of Service:
+Now, in Burp, examine if XML data is processed:
+
+Send the request to repeater-rightclick-extensions-content type converter-convert to XML. Send the request to view the response.
+No risk identified.
+
+
+
+File Extension Handling:
+File Size:
+This API is not used for file upload functionality. Not applicable.
+
+
+
+SSRF:
+We have performed this test case using Burp collaborator.
+
+Got to the burp collaborator and click copy to clip board then remove Host value and add copied value.
+Send request to server the go to the burp click on poll now. If we got response in burp collaborator its finding.
+Sono response in collaborator and its not a finding.
+
+DOS:
+
+Buffer Overflow:
+Try to add the ( %x%x%x%x%x%x%x%n) payload in input parameters or URL but we did not observe any lagging in response.
+No risk identified.
+
+
+Unrestricted Field Length:
+Insert 10,000 chracter length in the input field. Not a finding.
+
+
+@FND-Lack of Resource & Rate Limiting:
+Send the request to intruder and no payload positions added. Payloadtype:null
+Generate 1000 payloads.
+
+Add custom resourse pool to 300. Getting 200 OK response.
+risk identified.
