@@ -1,0 +1,5 @@
+sqlmap
+
+python3 sqlmap.py -r sqltest2.txt -batch -dbs
+
+python3 sqlmap.py -r sqltest2.txt -p parametername --dbs --threads=3 --force-ssl --method=get
